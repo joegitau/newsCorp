@@ -1,1 +1,10 @@
-<p>forecast works!</p>
+<div class="row">
+  <div class="col" *ngIf="forecast$">
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let forecast of forecast$ | async">
+        <p class="font-weight-bold m-0">{{ forecast.temp | number: '1.0-0'}} °C</p>
+        <p class="font-italic m-0">{{ forecast.dateStr | date: 'E'}}</p>
+      </li>
+    </ul>
+  </div>
+</div>

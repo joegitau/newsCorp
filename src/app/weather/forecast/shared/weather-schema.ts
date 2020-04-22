@@ -6,3 +6,8 @@ export interface WeatherRes {
     }
   }[];
 }
+
+export interface Forecast {
+  dateStr: string;
+  temp: string;
+}

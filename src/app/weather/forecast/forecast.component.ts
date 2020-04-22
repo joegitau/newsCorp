@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ForecastService } from '../forecast.service';
+import { Forecast } from './shared/weather-schema';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-forecast',
@@ -8,11 +10,12 @@ import { ForecastService } from '../forecast.service';
   styleUrls: ['./forecast.component.scss']
 })
 export class ForecastComponent implements OnInit {
+  forecast$: Observable<Forecast[]>;
 
   constructor(private forecastService: ForecastService) { }
 
   ngOnInit(): void {
-    this.forecastService.getForecast().subscribe(forecastData => console.log(forecastData));
+    this.forecast$ = this.forecastService.getForecast();
   }
 
 }

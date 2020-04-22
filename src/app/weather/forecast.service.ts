@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpParams, HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, observable } from 'rxjs';
 import { map, switchMap, pluck, mergeMap, filter, toArray } from 'rxjs/operators'
 import { WeatherRes } from './forecast/shared/weather-schema';
 
@@ -15,11 +15,11 @@ export class ForecastService {
   getForecast() {
     return this.getCurrentLocation()
       .pipe(
-        map( coords => {
+        map(coords => {
           return new HttpParams()
             .set('lat', String(coords.latitude))
             .set('lon', String(coords.longitude))
-            .set('units', 'metrics')
+            .set('units', 'metric')
             .set('appid', 'ffda23cc6f49430837eac691ed4e8754')
         }),
         switchMap(params => this.http.get<WeatherRes>(this.BASE_URL, { params })),

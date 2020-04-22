@@ -12,8 +12,7 @@ export class ForecastComponent implements OnInit {
   constructor(private forecastService: ForecastService) { }
 
   ngOnInit(): void {
-    this.forecastService.getCurrentLocation()
-      .subscribe(coords => console.log(coords));
+    this.forecastService.getForecast().subscribe(forecastData => console.log(forecastData));
   }
 
 }

@@ -1,6 +1,6 @@
 export interface WeatherRes {
   list: {
-    dt_text: string;
+    dt_txt: string;
     main: {
       temp: string;
     }

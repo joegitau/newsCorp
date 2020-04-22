@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpParams, HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators'
+import { Observable, of } from 'rxjs';
+import { map, switchMap, pluck, mergeMap, filter, toArray } from 'rxjs/operators'
 import { WeatherRes } from './forecast/shared/weather-schema';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ForecastService {
-  private BASE_URL = 'api.openweathermap.org/data/2.5/forecast';
+  private BASE_URL = 'https://api.openweathermap.org/data/2.5/forecast';
 
   constructor(private http: HttpClient) { }
 
@@ -22,7 +22,17 @@ export class ForecastService {
             .set('units', 'metrics')
             .set('appid', 'ffda23cc6f49430837eac691ed4e8754')
         }),
-        switchMap(params => this.http.get<WeatherRes>(this.BASE_URL, { params }))
+        switchMap(params => this.http.get<WeatherRes>(this.BASE_URL, { params })),
+        pluck('list'),
+        mergeMap(value => of(...value)),
+        filter((valAsObs, index) => index % 8 === 0),
+        map(valAsObs => {
+          return {
+            dateStr: valAsObs.dt_txt,
+            temp: valAsObs.main.temp
+          }
+        }),
+        toArray()
       );
   }
 

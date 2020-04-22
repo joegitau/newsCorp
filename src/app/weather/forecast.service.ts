@@ -27,13 +27,13 @@ export class ForecastService {
   }
 
   getCurrentLocation(): Observable<Coordinates> {
-    return new Observable(subscribe => {
+    return new Observable<Coordinates>(observer => {
       window.navigator.geolocation.getCurrentPosition(
         position => {
-          subscribe.next(position.coords);
-          subscribe.complete();
+          observer.next(position.coords);
+          observer.complete();
         },
-        error => console.error(error)
+        err => observer.error(err)
       )
     });
   }

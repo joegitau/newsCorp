@@ -3,7 +3,9 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { WeatherModule } from './weather/weather.module';
+import { NotificationsModule } from './notifications/notifications.module';
 import { AppComponent } from './app.component';
+// INTERCEPTOR DISABLED
 import { ForecastInterceptorService } from './interceptors/forecast-interceptor.service';
 
 @NgModule({
@@ -13,7 +15,8 @@ import { ForecastInterceptorService } from './interceptors/forecast-interceptor.
   imports: [
     BrowserModule,
     HttpClientModule,
-    WeatherModule
+    WeatherModule,
+    NotificationsModule
   ],
   providers: [
     // { provide: HTTP_INTERCEPTORS, useClass: ForecastInterceptorService, multi: true }

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpParams, HttpClient } from '@angular/common/http';
-import { Observable, of, observable } from 'rxjs';
-import { map, switchMap, pluck, mergeMap, filter, toArray } from 'rxjs/operators'
-import { WeatherRes } from './forecast/shared/weather-schema';
+import { Observable, of } from 'rxjs';
+import { map, switchMap, pluck, mergeMap, filter, toArray, share } from 'rxjs/operators'
+import { WeatherRes, Forecast } from './forecast/shared/weather-schema';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class ForecastService {
 
   constructor(private http: HttpClient) { }
 
-  getForecast() {
+  getForecast(): Observable<Forecast[]> {
     return this.getCurrentLocation()
       .pipe(
         map(coords => {
@@ -32,7 +32,8 @@ export class ForecastService {
             temp: valAsObs.main.temp
           }
         }),
-        toArray()
+        toArray(),
+        share()
       );
   }
 

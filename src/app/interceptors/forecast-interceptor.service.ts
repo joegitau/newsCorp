@@ -23,7 +23,7 @@ export class ForecastInterceptorService implements HttpInterceptor {
             .set('units', 'metric')
             .set('appid', 'ffda23cc6f49430837eac691ed4e8754')
         })
-      )
+      );
 
     return params.pipe(mergeMap(ps => {
       const clonedReq = req.clone({ params: ps });
